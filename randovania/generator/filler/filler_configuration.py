@@ -5,6 +5,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.graph.world_graph import WorldGraph
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -36,7 +37,7 @@ class PlayerPool:
 
 @dataclasses.dataclass(frozen=True)
 class FillerPlayerResult:
-    game: GameDescription
+    graph: WorldGraph
     patches: GamePatches
     unassigned_pickups: list[PickupEntry]
 
