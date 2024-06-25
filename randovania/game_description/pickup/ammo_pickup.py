@@ -13,7 +13,7 @@ from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.resources.location_category import LocationCategory
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import ResourceDatabaseView
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
@@ -74,7 +74,7 @@ class AmmoPickupDefinition(JsonDataclass):
     def pickup_category(self) -> PickupCategory:
         return AMMO_PICKUP_CATEGORY
 
-    def create_resource_lock(self, resource_database: ResourceDatabase) -> ResourceLock | None:
+    def create_resource_lock(self, resource_database: ResourceDatabaseView) -> ResourceLock | None:
         if self.unlocked_by is not None:
             assert self.temporary is not None
             return ResourceLock(

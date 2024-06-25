@@ -86,7 +86,8 @@ class AM2RBootstrap(Bootstrap):
         assert isinstance(configuration, AM2RConfiguration)
 
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         dr = 0.0
         if num_suits == 1:
