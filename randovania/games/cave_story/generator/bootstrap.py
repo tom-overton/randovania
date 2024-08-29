@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -31,7 +32,7 @@ def is_puppy_node(node: PickupNode, config: BaseConfiguration) -> bool:
 
 class CSBootstrap(Bootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         assert isinstance(configuration, CSConfiguration)
         enabled_resources = set()
