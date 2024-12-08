@@ -40,13 +40,12 @@ def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
 
 
 class EchoesBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, EchoesConfiguration)
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def event_resources_for_configuration(

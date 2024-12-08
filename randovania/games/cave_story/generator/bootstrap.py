@@ -13,8 +13,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_database_view import ResourceDatabaseView
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -57,13 +56,12 @@ class CSBootstrap(Bootstrap):
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, CSConfiguration)
         return EnergyTankDamageState(
             configuration.starting_hp,
             1,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("lifeCapsule"),
         )
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, results: PoolResults) -> GamePatches:

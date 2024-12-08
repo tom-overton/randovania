@@ -11,8 +11,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_database_view import ResourceDatabaseView
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -28,13 +27,12 @@ def is_metroid_location(node: PickupNode, config: BaseConfiguration) -> bool:
 
 
 class FusionBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, FusionConfiguration)
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def _get_enabled_misc_resources(

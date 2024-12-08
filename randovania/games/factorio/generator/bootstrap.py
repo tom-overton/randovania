@@ -61,7 +61,7 @@ class FactorioGameDatabaseViewProxy(GameDatabaseViewProxy):
 
 
 class FactorioBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: BaseConfiguration) -> DamageState:
         return NoOpDamageState(game.resource_database, game.region_list)
 
     def apply_game_specific_patches(
